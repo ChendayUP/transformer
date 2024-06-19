@@ -21,6 +21,7 @@ class MultiHeadAttention(nn.Module):
 
     def forward(self, q, k, v, mask=None):
         # 1. dot product with weight matrices
+        # q,k,v 经过矩阵变换后的数据, 输入512 输出 512
         q, k, v = self.w_q(q), self.w_k(k), self.w_v(v)
 
         # 2. split tensor by number of heads
