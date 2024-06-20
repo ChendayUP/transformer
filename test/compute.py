@@ -1,4 +1,5 @@
 # tensor([0., 1., 2., 3., 4., 5.], device='cuda:0') / (10000 ** (0.0 / 8)))
+import torch
 import math
 print(math.sin(0/ (10000 ** (0.0 / 8))))
 print(math.sin(1/ (10000 ** (0.0 / 8))))
@@ -18,3 +19,15 @@ print(math.sin(5/ (10000 ** (0.0 / 8))))
 # sin_input = pos / (10000 ** (0 / d_model))
 # print('\n')
 # print(sin_input)
+
+print(torch.empty(3,4,5).size())
+
+a = torch.Tensor([1,2,3,4,5,6])
+print(a.size())
+print(a.view(3,2))
+# tensor([[1., 2.],
+#         [3., 4.],
+#         [5., 6.]])
+print(a.view(2,3))
+# tensor([[1., 2., 3.],
+#         [4., 5., 6.]])
