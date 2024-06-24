@@ -15,10 +15,12 @@ class LayerNorm(nn.Module):
         self.eps = eps
 
     def forward(self, x):
+        # 最后一个维度的均值
         mean = x.mean(-1, keepdim=True)
+        # 最后一个维度的方差
         var = x.var(-1, unbiased=False, keepdim=True)
         # '-1' means last dimension. 
-
+        # 实现了输入张量 x 的归一化操作，使得数据具有零均值和单位方差 
         out = (x - mean) / torch.sqrt(var + self.eps)
         out = self.gamma * out + self.beta
         return out
