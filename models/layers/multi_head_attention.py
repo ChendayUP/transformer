@@ -63,6 +63,7 @@ class MultiHeadAttention(nn.Module):
         """
         batch_size, head, length, d_tensor = tensor.size()
         d_model = head * d_tensor
-
+        # contiguous确保张量在内存中的存储是连续的
+        # 从4个维度调整为3个维度
         tensor = tensor.transpose(1, 2).contiguous().view(batch_size, length, d_model)
         return tensor
