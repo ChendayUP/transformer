@@ -50,6 +50,7 @@ class Transformer(nn.Module):
 
     def make_trg_mask(self, trg):
         trg_pad_mask = (trg != self.trg_pad_idx).unsqueeze(1).unsqueeze(3)
+        # 返回第一个维度的值，即句子的长度
         trg_len = trg.shape[1]
         trg_sub_mask = torch.tril(torch.ones(trg_len, trg_len)).type(torch.ByteTensor).to(self.device)
         trg_mask = trg_pad_mask & trg_sub_mask
