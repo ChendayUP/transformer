@@ -53,5 +53,12 @@ class Transformer(nn.Module):
         # 返回第一个维度的值，即句子的长度
         trg_len = trg.shape[1]
         trg_sub_mask = torch.tril(torch.ones(trg_len, trg_len)).type(torch.ByteTensor).to(self.device)
+        # 对应位置元素执行与操作
+        # trg_sub_mask值: 
+        # tensor([[1, 0, 0, 0],
+        #         [1, 1, 0, 0],
+        #         [1, 1, 1, 0],
+        #         [1, 1, 1, 1]], dtype=torch.uint8)
+        # 将trg_pad_mask的值置0
         trg_mask = trg_pad_mask & trg_sub_mask
         return trg_mask

@@ -39,11 +39,18 @@ model = Transformer(src_pad_idx=src_pad_idx,
 
 print(f'The model has {count_parameters(model):,} trainable parameters')
 model.apply(initialize_weights)
+# params：需要优化的模型参数。
+# lr：初始学习率，控制参数更新的步长。
+# weight_decay：权重衰减系数，用于防止过拟合。
+# eps：一个小数值，防止计算过程中出现除零错误。
 optimizer = Adam(params=model.parameters(),
                  lr=init_lr,
                  weight_decay=weight_decay,
                  eps=adam_eps)
-
+# optimizer：需要调整学习率的优化器。
+# verbose：是否输出学习率调整的详细信息。
+# factor：学习率降低的比例。
+# patience：在指标没有改善的情况下，等待多少个 epoch 后再调整学习率
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer,
                                                  verbose=True,
                                                  factor=factor,
