@@ -26,4 +26,4 @@ warmup = 100
 epoch = 1000
 clip = 1.0
 weight_decay = 5e-4
-inf = float('inf')
+inf = float('inf') # 初始化为无穷大

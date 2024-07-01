@@ -55,7 +55,7 @@ scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer,
                                                  verbose=True,
                                                  factor=factor,
                                                  patience=patience)
-
+# 创建交叉熵损失函数，忽略填充标记
 criterion = nn.CrossEntropyLoss(ignore_index=src_pad_idx)
 
 
@@ -63,10 +63,13 @@ def train(model, iterator, optimizer, criterion, clip):
     model.train()
     epoch_loss = 0
     for i, batch in enumerate(iterator):
+        # 获取输入（源）
         src = batch.src
+        # 目标数据。
         trg = batch.trg
-
+        # 清零梯度
         optimizer.zero_grad()
+        # 前向传播，模型输出预测值
         output = model(src, trg[:, :-1])
         output_reshape = output.contiguous().view(-1, output.shape[-1])
         trg = trg[:, 1:].contiguous().view(-1)
@@ -78,13 +81,14 @@ def train(model, iterator, optimizer, criterion, clip):
 
         epoch_loss += loss.item()
         print('step :', round((i / len(iterator)) * 100, 2), '% , loss :', loss.item())
-
+    # 返回当前 epoch 的平均损失
     return epoch_loss / len(iterator)
 
 
 def evaluate(model, iterator, criterion):
     model.eval()
     epoch_loss = 0
+    # BLEU 分数列表。
     batch_bleu = []
     with torch.no_grad():
         for i, batch in enumerate(iterator):
