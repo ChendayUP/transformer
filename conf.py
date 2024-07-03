@@ -26,4 +26,6 @@ warmup = 100
 epoch = 1000
 clip = 1.0
 weight_decay = 5e-4
-inf = float('inf') # 初始化为无穷大
+inf = float('inf') # 初始化为正无穷大
+# 负无穷大
+# float('-inf')

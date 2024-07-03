@@ -16,10 +16,14 @@ class Tokenizer:
         """
         Tokenizes German text from a string into a list of strings
         """
+        print(self.spacy_de.tokenizer(text))
         return [tok.text for tok in self.spacy_de.tokenizer(text)]
 
     def tokenize_en(self, text):
         """
         Tokenizes English text from a string into a list of strings
         """
+        print(self.spacy_en.tokenizer(text))
         return [tok.text for tok in self.spacy_en.tokenizer(text)]
+
+

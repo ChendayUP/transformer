@@ -10,7 +10,11 @@ from torchtext.legacy.datasets.translation import Multi30k
 class DataLoader:
     source: Field = None
     target: Field = None
-
+    # DataLoader(ext=('.en', '.de'),
+    #                 tokenize_en=tokenizer.tokenize_en,
+    #                 tokenize_de=tokenizer.tokenize_de,
+    #                 init_token='<sos>',
+    #                 eos_token='<eos>')
     def __init__(self, ext, tokenize_en, tokenize_de, init_token, eos_token):
         self.ext = ext
         self.tokenize_en = tokenize_en
