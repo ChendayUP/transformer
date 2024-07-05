@@ -88,6 +88,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
 def train(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
     model.train()
+    # 每一个batch 有 64个图片, 64个图片一起进行运算
     for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
 
@@ -101,7 +102,7 @@ def train(dataloader, model, loss_fn, optimizer):
         optimizer.zero_grad()
 
         if batch % 100 == 0:
-            loss, current = loss.item(), (batch + 1) * len(X)
+            loss, current = loss.item(), (batch + 1) * len(X)  # 1*64,  101*64
             print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
 def test(dataloader, model, loss_fn):
@@ -109,16 +110,20 @@ def test(dataloader, model, loss_fn):
     num_batches = len(dataloader)
     model.eval()
     test_loss, correct = 0, 0
+    numberIndex = 0
     with torch.no_grad():
         for X, y in dataloader:
+            numberIndex = numberIndex + 1
+            print('numberIndex', numberIndex)
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
             correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+    # 将损失函数累加在一起, 再除以批次数量， 得到平均损失
     test_loss /= num_batches
     correct /= size
     print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
-epochs = 50
+epochs = 1
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
     train(train_dataloader, model, loss_fn, optimizer)
